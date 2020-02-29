@@ -2,12 +2,17 @@ import React, { useState, useEffect } from "react";
 import WinPopUp from './WinPopUp';
 import BingoBlock from './BingoBlock';
 import './App.css';
+import { boundRecordResult } from '../actions/resultAction';
+import { useSelector } from 'react-redux';
+
 
 function App() {
 	const [grid, setGrid] = useState([[]])
 	const [circle, setCircle] = useState([])
 	const [isWin, setIsWin] = useState(false)
 	const [searchValue, setSearchValue] = useState(0)
+
+	const result = useSelector(state => state.result);
 
 	// intialize
 	useEffect(()=>{
@@ -148,6 +153,10 @@ function App() {
 	}
 
 	const showWin = ()=>{
+		boundRecordResult({
+			...result,
+			win: ++result.win
+		})
 		setIsWin(true)
 	}
 
@@ -202,7 +211,7 @@ function App() {
 				}
 			</div>
 			{
-				isWin && <WinPopUp handleRestartClick = {handleRestartClick} />
+				isWin && <WinPopUp handleRestartClick = {handleRestartClick} result={result}/>
 			}
 		</div>
 	)

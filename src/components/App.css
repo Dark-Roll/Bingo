@@ -58,7 +58,7 @@ h1{
   height: 65%;
   text-align: center;
 }
-.victory__main p{
+.victory__main .victory__title{
   font-size: 4rem;
 }
 

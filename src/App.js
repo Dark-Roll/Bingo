@@ -1,22 +1,33 @@
 import React, { useState, useEffect } from "react";
+import WinPopUp from './WinPopUp';
+import BingoBlock from './BingoBlock';
 import './App.css';
 
 function App() {
 	const [grid, setGrid] = useState([[]])
 	const [circle, setCircle] = useState([])
-	const [isWin, setIsWin] = useState(true)
+	const [isWin, setIsWin] = useState(false)
 	const [searchValue, setSearchValue] = useState(0)
-
 
 	// intialize
 	useEffect(()=>{
-
 		initializeCircle()
 		initializeGrid()
 	}, [])
 
+	// compute if user win
+	useEffect(()=>{		
+		let circledArr = circle && circle.filter(e=> e === 1)
+
+		// there is no 3 lines when circled is less than 9 
+		if( circledArr.length >= 9 ){
+			computeLine()
+		}
+	}, [circle])
+
 	const length = 4
 	const lengthPow = length * length
+	const howManyLineIsWin = 3
 
 	const initializeCircle = ()=>{
 		let arr = []
@@ -24,7 +35,6 @@ function App() {
 			arr[index] = 0
 		}
 		setCircle(arr)
-
 	}
 
 	const initializeGrid = ()=>{
@@ -132,7 +142,7 @@ function App() {
 		}
 		console.log(slashLine);
 
-		if( rowLine + columnLine + slashLine >= 3){
+		if( rowLine + columnLine + slashLine >= howManyLineIsWin){
 			showWin()
 		}
 	}
@@ -173,76 +183,24 @@ function App() {
 	}
 
 	return (
-		<>
-			<div>
-
-				{/* show */}
-				數字 1~ 16 被圈的，不是 x y，這是 circle
+		<div className="bingo__container">
+			<div className="bingo__main">
+				<p> 賓果遊戲 </p>
+				<input id="search" type="number" value={searchValue} onChange={handleInputChange} placeholder={`輸入數字 1~${length*length} 以直接圈選`} />
 				<br />
-				{circle.slice(0, 4).join(' ')}
-				<br/>
-				{circle.slice(4, 8).join(' ')}
-				<br/>
-				{circle.slice(8, 12).join(' ')}
-				<br/>
-				{circle.slice(12, 16).join(' ')}
-				<br/>
-				<button onClick={computeLine}> compute </button>
-			</div>
-			<div>
+
 				{
-					grid[1] && <>
-						<p> 這是 bingo 陣列 </p>
-						<input type="number" value={searchValue} onChange={handleInputChange} placeholder={`輸入數字 1~${length*length} 以直接圈選`} />
-						<br />
-						
-						{grid[0].map( (e, i) => <button style={{display: 'inline-block', width:'30px', textAlign: 'center'}}
-							className={circle[parseInt(e)-1] === 1 ? 'circled' : '' }
-							value={e}
-							onClick={handleNumberClick}
-							key={i}
-						>
-							{ e} 
-						</button>)}
-						<br/>
-						{grid[1].map( (e, i)=> <button style={{display: 'inline-block', width:'30px', textAlign: 'center'}}
-							className={circle[parseInt(e)-1] === 1 ? 'circled' : '' }
-							value={e}
-							onClick={handleNumberClick}
-							key={i}
-						>
-							{ e} 
-						</button>)}
-						<br/>
-						{grid[2].map( (e, i)=> <button style={{display: 'inline-block', width:'30px', textAlign: 'center'}}
-							className={circle[parseInt(e)-1] === 1 ? 'circled' : '' }
-							value={e}
-							onClick={handleNumberClick}
-							key={i}
-						>
-							{ e} 
-						</button>)}
-						<br/>
-						{grid[3].map( (e, i)=> <button style={{display: 'inline-block', width:'30px', textAlign: 'center'}}
-							className={circle[parseInt(e)-1] === 1 ? 'circled' : '' }
-							value={e}
-							onClick={handleNumberClick}
-							key={i}
-						>
-							{ e} 
-						</button>)}
-					</>
+					grid[1] && <BingoBlock 
+						grid = {grid}
+						handleNumberClick = {handleNumberClick}
+						circle= {circle}
+					/>
 				}
 			</div>
 			{
-				isWin && <div className="victoryContainer">
-					{/* 重新開始按鈕放在蓋板內 */}
-					<p> You win </p>
-					<button onClick={handleRestartClick}>Restart</button>
-				</div>
+				isWin && <WinPopUp handleRestartClick = {handleRestartClick} />
 			}
-
-		</>
+		</div>
 	)
 }
 

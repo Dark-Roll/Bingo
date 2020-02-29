@@ -1,4 +1,61 @@
 
+.bingo__container{
+  display: flex;
+  justify-content: center;
+}
+.bingo__main{
+  text-align: center;
+}
+
+#search{
+  margin-bottom: 1rem;
+}
+
 .circled{
   border: 1px solid red;
+}
+
+.victory__container{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, .5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.victory__main{
+  background-color: rgb(166, 133, 91);
+  color: rgb(225, 220, 163);
+  /* color: rgb(85, 88, 55); */
+  width: 80%;
+  height: 65%;
+  text-align: center;
+}
+.victory__main p{
+  font-size: 4rem;
+}
+
+.bingoblock{
+  display: inline-block;
+  width: 40px;
+}
+
+button{
+  color: #fff;
+  background-color: #3D6299;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: .25rem;
+
+  
+  border: unset;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
 }

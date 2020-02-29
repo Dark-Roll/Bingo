@@ -4,19 +4,30 @@ import './App.css';
 function App() {
 	const [grid, setGrid] = useState([[]])
 	const [circle, setCircle] = useState([])
-	const [isWin, setIsWin] = useState(false)
+	const [isWin, setIsWin] = useState(true)
 	const [searchValue, setSearchValue] = useState(0)
 
 
 	// intialize
 	useEffect(()=>{
+
+		initializeCircle()
+		initializeGrid()
+	}, [])
+
+	const length = 4
+	const lengthPow = length * length
+
+	const initializeCircle = ()=>{
 		let arr = []
 		for (let index = 0; index < lengthPow; index++) {
 			arr[index] = 0
 		}
 		setCircle(arr)
 
+	}
 
+	const initializeGrid = ()=>{
 		let intArr =[]
 		let resultArr = []
 		for (let index = 0; index < lengthPow; index++) {
@@ -42,11 +53,7 @@ function App() {
 		}
 
 		setGrid(gridArr)
-
-	}, [])
-
-	const length = 4
-	const lengthPow = length * length
+	}
 
 	const createRandomArray = (intArr, resultArr= [])=>{
 
@@ -157,6 +164,14 @@ function App() {
 		setCircle(newArr)
 	}
 
+	const handleRestartClick =()=>{
+		setIsWin(false)
+		setSearchValue(0)
+
+		initializeCircle()
+		initializeGrid()
+	}
+
 	return (
 		<>
 			<div>
@@ -220,11 +235,11 @@ function App() {
 				}
 			</div>
 			{
-				isWin && <>
+				isWin && <div className="victoryContainer">
 					{/* 重新開始按鈕放在蓋板內 */}
 					<p> You win </p>
-					<button>Restart</button>
-				</>
+					<button onClick={handleRestartClick}>Restart</button>
+				</div>
 			}
 
 		</>

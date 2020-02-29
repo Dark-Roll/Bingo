@@ -151,28 +151,30 @@ function App() {
 		setIsWin(true)
 	}
 
+	const handleNumberClick = e =>{
+		setCircleIndexTrue( parseInt(e.target.value) -1 )
+	}
+
 	const handleInputChange = e =>{
 		setSearchValue(e.target.value)
-		if(e.target.value>0 && e.target.value<= lengthPow){
-			
-			let changeIndex = e.target.value -1 
-			let newArr = [ ...circle.slice(0, changeIndex), 1, ...circle.slice(changeIndex+1) ]
-			console.log(newArr);
-			setCircle(newArr)
+	}
+
+	const handleSearchClick = ()=>{
+		if(searchValue > 0 && searchValue <= lengthPow){			
+			setCircleIndexTrue( searchValue -1 )
+		} else {
+			alert( '請確認輸入數字是否正確')
 		}
+	}
+
+	const setCircleIndexTrue = index => {
+		let newArr = [ ...circle.slice(0, index), 1, ...circle.slice(index+1) ]
+		setCircle(newArr)
 	}
 
 	// Example: grid = [ [1,1,0,0], [0,0,1,1], [], [] ]
 	// grid[2] 會顯示當 x 是 2 的時候，y 的資料
 	// grid[2][1] 會顯示當 x 是 2，y 是 1 的時候的資料
-
-	const handleNumberClick = e =>{
-		
-		let changeIndex = parseInt(e.target.value) -1 
-		let newArr = [ ...circle.slice(0, changeIndex), 1, ...circle.slice(changeIndex+1) ]
-		console.log(newArr);
-		setCircle(newArr)
-	}
 
 	const handleRestartClick =()=>{
 		setIsWin(false)
@@ -185,9 +187,11 @@ function App() {
 	return (
 		<div className="bingo__container">
 			<div className="bingo__main">
-				<p> 賓果遊戲 </p>
-				<input id="search" type="number" value={searchValue} onChange={handleInputChange} placeholder={`輸入數字 1~${length*length} 以直接圈選`} />
-				<br />
+				<h1> 賓果遊戲 </h1>
+				<div className="search__main">
+					<input className="search__input" type="number" value={searchValue} onChange={handleInputChange} placeholder={`輸入數字 1~${length*length} 以直接圈選`} />
+					<button className="search__button" onClick={handleSearchClick}>圈選 </button>
+				</div>
 
 				{
 					grid[1] && <BingoBlock 

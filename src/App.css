@@ -1,3 +1,8 @@
+@import-normalize;
+
+h1{
+  font-weight: 350;
+}
 
 .bingo__container{
   display: flex;
@@ -7,9 +12,26 @@
   text-align: center;
 }
 
-#search{
-  margin-bottom: 1rem;
+.search__main{
+  margin-bottom: 2.5rem;
+  height: 40px;
 }
+.search__input{
+  border-top-left-radius: .25rem;
+  border-bottom-left-radius: .25rem;
+  height: 100%;
+  border: 1px solid gray;
+  box-sizing: border-box;
+  padding-left: .5rem;
+  outline: none;
+}
+.search__button{
+  height: 100%;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+
 
 .circled{
   border: 1px solid red;
@@ -43,16 +65,21 @@
 .bingoblock{
   display: inline-block;
   width: 40px;
+  border-radius: 0;
+  border: 1px solid lightseagreen;
+}
+.bingoblock.circled{
+  border: 1px solid #FF37A6;
 }
 
 button{
   color: #fff;
-  background-color: #3D6299;
+  background-color: #51a351;
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
   border-radius: .25rem;
-
+  outline: none;
   
   border: unset;
   padding: .375rem .75rem;

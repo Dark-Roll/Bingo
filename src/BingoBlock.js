@@ -9,7 +9,7 @@ function BingoBlock(props) {
     return (
         <>
             {
-                grid.map(sameXArr => <>
+                grid.map( (sameXArr, i) => <div key={i} style={{zoom: 2}}>
                     {
                         sameXArr.map((e, i) => <button
                             className={circle[parseInt(e) - 1] === 1 ? 'circled bingoblock' : 'bingoblock'}
@@ -20,8 +20,7 @@ function BingoBlock(props) {
                             {e}
                         </button>)
                     }
-                    <br />
-                </>)
+                </div>)
             }
         </>
     )

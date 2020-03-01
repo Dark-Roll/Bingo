@@ -56,8 +56,6 @@ function App() {
 			intArr[index] = index +1
 		}
 
-		console.log( createRandomArray(intArr, resultArr) )
-		console.log( createRandomArray(intArr, resultArr) )
 		let randomArr = createRandomArray(intArr, resultArr)
 
 		let gridArr = []
@@ -82,17 +80,12 @@ function App() {
 		let randomNum = Math.floor(Math.random() * 100 % intArr.length)
 		resultArr.push(intArr[randomNum])
 		intArr.splice(randomNum, 1)
-	
-		console.log(intArr);
-		
+			
 		if(intArr.length > 0){
-			createRandomArray(intArr, resultArr)
-			console.log("length > 0, intArr is:", intArr);
+			return createRandomArray(intArr, resultArr)
 		} else{
-			console.log("length =< 0, intArr is:", intArr);
 			return resultArr
 		}
-
 	}
 
 	const computeLine = ()=>{
@@ -215,6 +208,7 @@ function App() {
 			<div className="bingo__main">
 				<h1> 賓果遊戲 </h1>
 				<p> 請直接點選數字圈選或輸入數字圈選 </p>
+				<p> 連線連成三條即獲勝 </p>
 				<p style={{fontSize: '.7rem', textAlign:'end', color:'gray'}}>何不試試看負數</p>
 				<div className="search__main">
 					<input className="search__input" type="number" value={searchValue} onChange={handleSearchInputChange} placeholder={`輸入數字 1~${length*length} 以直接圈選`} />

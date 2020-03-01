@@ -11,6 +11,9 @@ function App() {
 	const [circle, setCircle] = useState([])
 	const [isWin, setIsWin] = useState(false)
 	const [searchValue, setSearchValue] = useState(0)
+	const [length, setLength] = useState(4)
+	const [isEasterEggShow, setIsEasterEggShow ] = useState(false)
+	const [lengthPow, setLengthPow ] = useState(length*length)
 
 	const result = useSelector(state => state.result);
 
@@ -30,8 +33,12 @@ function App() {
 		}
 	}, [circle])
 
-	const length = 4
-	const lengthPow = length * length
+	// change grid size
+	useEffect(()=>{
+		initializeGrid()
+		initializeCircle()
+	}, [lengthPow])
+
 	const howManyLineIsWin = 3
 
 	const initializeCircle = ()=>{
@@ -160,12 +167,22 @@ function App() {
 		setIsWin(true)
 	}
 
+	const handleLengthInputChange = e =>{
+		setLength(e.target.value)
+		if( parseInt(e.target.value) >0 ){
+			setLengthPow( e.target.value* e.target.value )
+		}
+	}
+
 	const handleNumberClick = e =>{
 		setCircleIndexTrue( parseInt(e.target.value) -1 )
 	}
 
-	const handleInputChange = e =>{
-		setSearchValue(e.target.value)
+	const handleSearchInputChange = e =>{
+		setSearchValue( parseInt(e.target.value) )
+		if( parseInt(e.target.value) === -1 ){
+			setIsEasterEggShow(true)
+		}
 	}
 
 	const handleSearchClick = ()=>{
@@ -197,8 +214,10 @@ function App() {
 		<div className="bingo__container">
 			<div className="bingo__main">
 				<h1> 賓果遊戲 </h1>
+				<p> 請直接點選數字圈選或輸入數字圈選 </p>
+				<p style={{fontSize: '.7rem', textAlign:'end', color:'gray'}}>何不試試看負數</p>
 				<div className="search__main">
-					<input className="search__input" type="number" value={searchValue} onChange={handleInputChange} placeholder={`輸入數字 1~${length*length} 以直接圈選`} />
+					<input className="search__input" type="number" value={searchValue} onChange={handleSearchInputChange} placeholder={`輸入數字 1~${length*length} 以直接圈選`} />
 					<button className="search__button" onClick={handleSearchClick}>圈選 </button>
 				</div>
 
@@ -208,6 +227,12 @@ function App() {
 						handleNumberClick = {handleNumberClick}
 						circle= {circle}
 					/>
+				}
+				{
+					isEasterEggShow && <div>
+						<span> 賓果大小(x乘x)： </span>
+						<input value={length} onChange={handleLengthInputChange} style={{marginTop: '2rem'}} />
+					</div>
 				}
 			</div>
 			{
